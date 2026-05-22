@@ -1,11 +1,11 @@
-# Compiler
+# compiler
 CXX := clang++
 CC  := clang
 
 CFLAGS := -Wall -Wshadow -Iinclude --std=c23
 CFLAGS += --write-user-dependencies -MP
 
-# Output
+# output
 OBJ_DIR := build
 SRC_DIR := source
 OUTPUT  := bin/nenecchi
@@ -19,7 +19,7 @@ DEPS := $(OBJS:.o=.d)
 
 -include $(DEPS)
 
-# Building
+# building
 all: $(OUTPUT)
 
 $(OUTPUT): $(OBJS)
@@ -33,3 +33,5 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 
 clean:
 	rm -rf $(OBJS) $(DEPS) $(OUTPUT)
+
+rebuild: clean .WAIT all
