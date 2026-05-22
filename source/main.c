@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/stat.h>
 
 #include "utils.h"
 
@@ -31,7 +30,7 @@ int main(int argc, const char* argv[]) {
     create_directory(argv[2]);
     strcat(root_dir, argv[2]);
     create_template(root_dir);
-    printf("note: for a c++ project make sure to rename name.c -> name.cpp\n");
+    printf("note: for a c++ project make sure to rename name.c to name.cpp\n");
 
     return 0;
 }
