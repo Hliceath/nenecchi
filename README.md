@@ -2,11 +2,12 @@
 
 ⚠️ Disgusting code
 
-Start a c/c++ project template with `nenecchi new <project_name>` which create four directories `bin/ build/ include/ source/` and three files `source/main.c Makefile .clang-format`
+Start a c/c++ project template with `nenecchi new <project_name>` which create four directories `bin/ build/ include/ source/` and three files `source/main.c Makefile .clang-format`.
+For now this program is not compatible with Windows.
 
 # Dev
 
-Install `gcc clang cmake`
+Install `gcc clang make`
 
 To run the program in dev environment do the following:
 
