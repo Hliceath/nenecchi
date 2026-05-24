@@ -7,34 +7,43 @@
 void create_template_subdirs(char* root_dir);
 
 int main(int argc, const char* argv[]) {
-    char root_dir[253] = "./";
-
-    if (argc != 3) {
-        printf(RED "error" RESET ": number of arguments must be 2.\n");
-        exit(-1);
-    }
 
     if (strcmp(argv[1], "new") == 0) {
+        if (argc != 3) {
+            printf(RED "error" RESET ": missing project name\n");
+            exit(-1);
+        }
+
+        if (sizeof(argv[2]) > 250) {
+            printf(RED "error" RESET
+                       ": name of folder too long (limit 250 chars)\n");
+            exit(-1);
+        }
+
+        char root_dir[253] = "./";
+
         printf(GREEN "creating" RESET " a new C/C++ template \"%s\"\n",
                argv[2]);
+
+        create_directory(argv[2]);
+        strcat(root_dir, argv[2]);
+        create_template_subdirs(root_dir);
+
+        printf(BLUE
+               "note" RESET
+               ": for a c++ project make sure to rename main.c to main.cpp\n");
+    } else if (strcmp(argv[1], "--version") == 0 ||
+               strcmp(argv[1], "-v") == 0) {
+        show_version();
+
+    } else if (strcmp(argv[1], "--help") == 0 || strcmp(argv[1], "-h") == 0) {
+        show_help();
     } else {
         printf(RED "invalid command" RESET
                    ": use the keyword 'new' to create a new "
                    "project: 'nenecchi new <project_name>.'\n");
         exit(-1);
     }
-
-    if (sizeof(argv[2]) > 250) {
-        printf(RED "error" RESET
-                   ": name of folder too long (limit 250 chars)\n");
-        exit(-1);
-    }
-
-    create_directory(argv[2]);
-    strcat(root_dir, argv[2]);
-    create_template_subdirs(root_dir);
-    printf(BLUE "note" RESET
-                ": for a c++ project make sure to rename main.c to main.cpp\n");
 
     return 0;
 }

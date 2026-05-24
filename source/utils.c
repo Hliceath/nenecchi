@@ -24,3 +24,10 @@ void create_directory(const char* path) {
         exit(-1);
     }
 }
+
+void show_version() { printf("nenecchi %s\n", VERSION); }
+
+void show_help() {
+    printf("create a new C/C++ project with the command `nenecchi new "
+           "<project_name>`\n");
+}
