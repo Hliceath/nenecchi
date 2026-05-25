@@ -4,7 +4,9 @@
 
 #include "utils.h"
 
-void create_template_subdirs(char* root_dir);
+void create_project(int argc, const char* argv[]);
+void create_project_subdirs(char* root_dir);
+void create_template_files(char* root_dir);
 
 int main(int argc, const char* argv[]) {
     if (argc <= 1) {
@@ -13,29 +15,7 @@ int main(int argc, const char* argv[]) {
     }
 
     if (strcmp(argv[1], "new") == 0) {
-        if (argc != 3) {
-            printf(RED "error" RESET ": missing project name\n");
-            exit(-1);
-        }
-
-        if (sizeof(argv[2]) > 250) {
-            printf(RED "error" RESET
-                       ": name of folder too long (limit 250 chars)\n");
-            exit(-1);
-        }
-
-        char root_dir[253] = "./";
-
-        printf(GREEN "creating" RESET " a new C/C++ template \"%s\"\n",
-               argv[2]);
-
-        create_directory(argv[2]);
-        strcat(root_dir, argv[2]);
-        create_template_subdirs(root_dir);
-
-        printf(BLUE
-               "note" RESET
-               ": for a c++ project make sure to rename main.c to main.cpp\n");
+        create_project(argc, argv);
     } else if (strcmp(argv[1], "--version") == 0 ||
                strcmp(argv[1], "-v") == 0) {
         show_version();
@@ -52,10 +32,32 @@ int main(int argc, const char* argv[]) {
     return 0;
 }
 
-void create_template_subdirs(char* root_dir) {
+void create_project(int argc, const char* argv[]) {
+    char root_dir[253] = "./";
+    if (argc != 3) {
+        printf(RED "error" RESET ": missing project name\n");
+        exit(-1);
+    }
+
+    if (sizeof(argv[2]) > 250) {
+        printf(RED "error" RESET
+                   ": name of folder too long (limit 250 chars)\n");
+        exit(-1);
+    }
+
+    printf(GREEN "creating" RESET " a new C/C++ template \"%s\"\n", argv[2]);
+
+    create_directory(argv[2]);
+    strcat(root_dir, argv[2]);
+    create_project_subdirs(root_dir);
+    create_template_files(root_dir);
+
+    printf(BLUE "note" RESET
+                ": for a c++ project make sure to rename main.c to main.cpp\n");
+}
+
+void create_project_subdirs(char* root_dir) {
     const char* subdirs[4] = {"/bin", "/build", "/include", "/source"};
-    const char main_file[8] = "/main.c";
-    const char* root_files[2] = {"/Makefile", "/.clang-format"};
     const char main_content[105] = "#include <stdio.h>\n\n"
                                    "int main(int argc, const char* argv[]) {"
                                    "\n    printf(\"new game!\");\n"
@@ -70,9 +72,13 @@ void create_template_subdirs(char* root_dir) {
         create_directory(path_subdir);
 
         if (strcmp(subdirs[i], "/source") == 0) {
-            create_file(strcat(path_subdir, main_file), main_content);
+            create_file(strcat(path_subdir, "/main.c"), main_content);
         }
     }
+}
+
+void create_template_files(char* root_dir) {
+    const char* root_files[2] = {"/Makefile", "/.clang-format"};
 
     for (int i = 0; i < (sizeof(root_files) / sizeof(root_files[0])); i++) {
         char path_file[267] = "";
