@@ -7,6 +7,10 @@
 void create_template_subdirs(char* root_dir);
 
 int main(int argc, const char* argv[]) {
+    if (argc <= 1) {
+        printf(RED "error" RESET ": no arguments given.\n");
+        exit(-1);
+    }
 
     if (strcmp(argv[1], "new") == 0) {
         if (argc != 3) {
