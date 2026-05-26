@@ -29,8 +29,8 @@ void create_directory(const char* path) {
 }
 
 void show_version() {
-    size_t msg_size = sizeof("nenecchi ") + sizeof(VERSION) + 1;
-    print_msg(INFO, strcat("nenecchi ", VERSION));
+    char version_str[20] = "nenecchi " VERSION;
+    print_msg(INFO, version_str);
 }
 
 void show_help() {
@@ -46,14 +46,11 @@ void print_msg(enum MSG_TYPE type, char* msg) {
     case ERROR:
         printf(RED "Error: " RESET "%s\n", msg);
         break;
-    case WARNING:
-        printf(YELLOW "Warning: " RESET "%s\n", msg);
-        break;
     case INFO:
         printf(CYAN "Info: " RESET "%s\n", msg);
         break;
     default:
-        printf("%s", msg);
+        printf("%s\n", msg);
         break;
     }
 }
