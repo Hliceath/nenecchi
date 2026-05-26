@@ -12,7 +12,7 @@ void create_file(char* path, const char* content) {
     FILE* file = fopen(path, "w");
 
     if (!file) {
-        fprintf(stderr, "Error: %s\n", strerror(errno));
+        fprintf(stderr, RED "error: " RESET "%s\n", strerror(errno));
         exit(-1);
     }
 
@@ -23,7 +23,7 @@ void create_file(char* path, const char* content) {
 
 void create_directory(const char* path) {
     if (mkdir(path, CHMOD) == -1) {
-        fprintf(stderr, "Error: %s\n", strerror(errno));
+        fprintf(stderr, RED "error: " RESET "%s\n", strerror(errno));
         exit(-1);
     }
 }
@@ -41,13 +41,13 @@ void show_help() {
 void print_msg(enum MSG_TYPE type, char* msg) {
     switch (type) {
     case SUCCESS:
-        printf(GREEN "Success: " RESET "%s\n", msg);
+        printf(GREEN "success: " RESET "%s\n", msg);
         break;
     case ERROR:
-        printf(RED "Error: " RESET "%s\n", msg);
+        printf(RED "error: " RESET "%s\n", msg);
         break;
     case INFO:
-        printf(CYAN "Info: " RESET "%s\n", msg);
+        printf(CYAN "info: " RESET "%s\n", msg);
         break;
     default:
         printf("%s\n", msg);

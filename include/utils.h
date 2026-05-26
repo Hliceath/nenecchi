@@ -7,7 +7,7 @@
 #define CYAN "\x1b[36m"
 #define RESET "\x1b[0m"
 
-#define VERSION "v1.1.2"
+#define VERSION "v1.1.3"
 
 enum MSG_TYPE { SUCCESS, ERROR, INFO };
 
